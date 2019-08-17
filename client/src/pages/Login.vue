@@ -10,7 +10,7 @@
           lazy-rules
           :rules="[
             val => !!val || 'Это обязательное поле',
-            val => isValidEmail || 'Введите валидный маил',
+            val => isValidEmail || 'Введите валидный Email',
           ]"
         />
         <q-input
@@ -50,15 +50,26 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
-      this.$store.dispatch('auth/login');
+    async onSubmit() {
+      const data = {
+        email: this.email,
+        password: this.password,
+      };
+      try {
+        await this.$store.dispatch('auth/login', data);
+      } catch (error) {
+        this.$q.notify({
+          color: 'red',
+          message: error.message,
+        });
+      }
     },
   },
   computed: {
     isValidEmail() {
       // eslint-disable-next-line
       const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return reg.test(this.form.email);
+      return reg.test(this.email);
     },
   },
 };

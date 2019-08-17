@@ -7,5 +7,6 @@ export default () => {
 
   if (TokenService.getToken()) {
     ApiService.setHeader();
+    ApiService.mount401Interceptor();
   }
 };

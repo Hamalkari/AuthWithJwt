@@ -1,5 +1,9 @@
-const setUser = (state, user) => {
-  state.user = user;
+const logginSuccess = (state, accessToken) => {
+  state.accessToken = accessToken;
 };
 
-export { setUser };
+const logoutSuccess = state => {
+  state.accessToken = '';
+};
+
+export { logginSuccess, logoutSuccess };

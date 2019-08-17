@@ -1,3 +1,5 @@
+import { TokenService } from '../../services/storage.service';
+
 export default {
-  user: null,
+  accessToken: TokenService.getToken(),
 };

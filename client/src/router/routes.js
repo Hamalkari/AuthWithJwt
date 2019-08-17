@@ -8,11 +8,17 @@ const routes = [
         path: 'register',
         name: 'Register',
         component: () => import('pages/Register.vue'),
+        meta: {
+          onlyWhenLoggedOut: true,
+        },
       },
       {
         path: 'login',
         name: 'Login',
         component: () => import('pages/Login.vue'),
+        meta: {
+          onlyWhenLoggedOut: true,
+        },
       },
     ],
   },

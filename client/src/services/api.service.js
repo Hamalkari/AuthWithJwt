@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { TokenService } from './storage.service';
+import store from '../store'; //eslint-disable-line
 
 const ApiService = {
   init(baseUrl) {
@@ -27,6 +28,35 @@ const ApiService = {
   },
   customRequest(opt) {
     return axios(opt);
+  },
+  _401interceptor: null,
+
+  mount401Interceptor() {
+    this._401interceptor = axios.interceptors.response.use(
+      response => {
+        return response;
+      },
+      async error => {
+        if (error.response.status == 401) {
+          try {
+            await store.dispatch('auth/refreshToken');
+
+            return this.customRequest({
+              method: error.config.method,
+              url: error.config.url,
+              data: error.config.data,
+            });
+          } catch (error) {
+            store.dispatch('auth/logout');
+
+            throw error;
+          }
+        }
+      },
+    );
+  },
+  unmount401Interceptor() {
+    axios.interceptors.response.eject(this._401interceptor);
   },
 };
 
