@@ -14,11 +14,6 @@ const validate = (schema) => (ctx, next) => {
   return next(); // eslint-disable-line
 };
 
-const LOGIN_SCHEMA = Joi.object().keys({
-  email: Joi.string().email().required(),
-  password: Joi.string().required(),
-});
-
 const REGISTER_SCHEMA = Joi.object().keys({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
@@ -27,8 +22,18 @@ const REGISTER_SCHEMA = Joi.object().keys({
   phone_number: Joi.string().regex(/\d+$/).length(11),
 });
 
+const LOGIN_SCHEMA = Joi.object().keys({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+});
+
+const REFRESH_TOKEN_SCHEMA = Joi.object().keys({
+  refreshToken: Joi.string().required(),
+});
+
 export default {
   validate,
   LOGIN_SCHEMA,
   REGISTER_SCHEMA,
+  REFRESH_TOKEN_SCHEMA,
 };

@@ -6,6 +6,7 @@ exports.up = function (knex) {
     table.string('password', 255).notNullable();
     table.string('first_name', 255).notNullable();
     table.string('second_name', 255).notNullable();
+    table.string('refresh_token', 255).notNullable().defaultTo('');
     table.integer('created_at').defaultTo(knex.raw('extract(epoch from now())'));
     table.integer('updated_at').defaultTo(knex.raw('extract(epoch from now())'));
   });

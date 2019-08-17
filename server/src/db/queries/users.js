@@ -17,6 +17,20 @@ function register(data) {
     });
 }
 
+function getOneUser(data) {
+  return knex('users')
+    .where(data)
+    .returning('*');
+}
+
+function updateUser(opts, data) {
+  return knex('users')
+    .where(opts)
+    .update(data);
+}
+
 export default {
   register,
+  getOneUser,
+  updateUser,
 };
